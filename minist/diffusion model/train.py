@@ -451,7 +451,7 @@ class ImageGenerator(object):
     def visualize_results(self, epoch):
         self.sampler.eval()
         # 保存结果路径
-        output_path = 'results/Diffusion'
+        output_path = 'results'
         if not os.path.exists(output_path):
             os.makedirs(output_path)
 
