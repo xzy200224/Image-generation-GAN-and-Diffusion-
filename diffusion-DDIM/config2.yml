@@ -1,0 +1,60 @@
+### model params
+Model:
+  in_channels: 1  # MNIST images are grayscale, so we change from 3 to 1
+  out_channels: 1  # Same reason as above
+  model_channels: 8
+  attention_resolutions: [16, ]
+  num_res_blocks: 2
+  dropout: 0.1
+  channel_mult: [1, 2]
+  conv_resample: True
+  num_heads: 2
+
+### dataset params
+Dataset:
+  # Deciding which dataset to use, must be one of {'mnist', 'cifar', 'custom'}.
+  dataset: "mnist"  # Change from "cifar" to "mnist"
+  # If mnist and cifar datasets, whether to use the training set.
+  train: True
+  # Folder of data sets. When `dataset = custom`, this parameter can be a list with different folders.
+  # Then all images in the list with suffixes in `suffix` in the folder will be loaded.
+  data_path: "./data/"
+  # If mnist and cifar datasets, whether to download it.
+  download: True
+  # If mnist dataset, image_size is [28, 28]. If cifar dataset, image_size is [32, 32]. If custom, specify as needed.
+  image_size: [28, 28]  # Change from [32, 32] to [28, 28] for MNIST
+  # If custom dataset, what is the mode of the image. must be one of {'RGB', 'L', 'CMYK'}.
+  mode: "L"  # Change from "RGB" to "L" for grayscale images
+  # If custom dataset, decide what suffix to load for the image.
+  suffix: ["png", "jpg"]  # This is not applicable for MNIST, but keeping it here for completeness
+
+  # parameters for torch.utils.data.DataLoader
+  batch_size: 32
+  shuffle: True
+  drop_last: True
+  pin_memory: True
+  num_workers: 4
+
+### trainer params
+Trainer:
+  # sample time steps
+  T: 1000
+  beta: [0.0001, 0.02]
+
+### callback params
+Callback:
+  # The save path for checkpoint.
+  filepath: "./checkpoint/mnist.pth"  # Update the file name to reflect the new dataset
+  # Frequency of checkpoint saving.
+  save_freq: 1
+
+### train params
+device: "cuda"
+epochs: 100
+# Whether to continue training, True or False
+consume: False
+# If continue training, which checkpoint to load
+consume_path: "./checkpoint/mnist_8.pth"  # Update the file name to reflect the new dataset
+
+### optimizer params
+lr: 0.001
